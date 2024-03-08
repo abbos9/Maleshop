@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+<!-- Blog Details Hero Begin -->
+<section class="blog-hero spad">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-9 text-center">
+        <div class="blog__hero__text">
+          <h2>{{ blog_detail.title }}</h2>
+          <ul>
+            <li>{{ blog_detail.author }}</li>
+            <li>{{ blog_detail.created_at | date:'F d, Y ' }}</li>
+            <li>{{blog_detail.message.all.count}} Comments</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog Details Hero End -->
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-12">
+        <div class="blog__details__pic">
+          <img src="{{ blog_detail.image.url }}" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="blog__details__content">
+          <div class="blog__details__share">
+            <span>share</span>
+            <ul>
+              <li>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a href="#" class="youtube"
+                  ><i class="fa fa-youtube-play"></i
+                ></a>
+              </li>
+              <li>
+                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="blog__details__text">
+            <p>{{ blog_detail.description }}</p>
+            <p>{{ blog_detail.short_description }}</p>
+          </div>
+
+          <div class="blog__details__option">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="blog__details__author">
+                  <div class="blog__details__author__pic d-flex">
+                    <img src="{{blog_detail.author.avatar.url}}" alt="" />
+                    <p>{{blog_detail.author.full_name}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="blog__details__tags">
+                  {% for tag in blog_detail.tags.all %}
+                  <a href="{% url 'pages:blog' %}?tag={{tag.title}}"
+                    >#{{ tag.title }}</a
+                  >
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="blog__details__btns">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                {% if blog_detail.get_previous %}
+                <a
+                  href="{% url 'pages:blog_detail' pk=blog_detail.get_previous.pk %}"
+                  class="blog__details__btns__item"
+                >
+                  <p><span class="arrow_left"></span> Previous Post</p>
+                  <h5>{{ blog_detail.get_previous_by_created_at }}</h5>
+                </a>
+                {% endif %}
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                {% if blog_detail.get_next %}
+                <a
+                  href="{% url 'pages:blog_detail' pk=blog_detail.get_next.pk %}"
+                  class="blog__details__btns__item blog__details__btns__item--next"
+                >
+                  <p>Next Post <span class="arrow_right"></span></p>
+                  <h5>{{ blog_detail.get_next_by_created_at }}</h5>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="blog__details__comment">
+            <h4>Leave A Comment</h4>
+            <form
+              method="POST"
+              action="{% url 'pages:comments' pk=blog_detail.id %}"
+            >
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <label for="id_name">Name:</label>
+                  <input
+                    id="id_name"
+                    name="name"
+                    type="text"
+                    placeholder="Name"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-4">
+                  <label for="id_email">Email:</label>
+                  <input
+                    id="id_email"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-4">
+                  <label for="id_phone">Phone:</label>
+                  <input
+                    id="id_phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="Phone"
+                  />
+                </div>
+                <div class="col-lg-12 text-center">
+                  <label for="id_message">Comment:</label>
+                  <textarea
+                    id="id_message"
+                    name="message"
+                    placeholder="Comment"
+                  ></textarea>
+                  <button type="submit" class="site-btn">Post Comment</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Blog Details Comment End -->
+          <div class="blog-details-comment spad">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  {% if messages %}
+                  <div class="alert alert-info">
+                    <ul>
+                      {% for message in messages %}
+                      <li>{{ message }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Blog Details Comment End -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog Details Section End -->
+{% endblock %}

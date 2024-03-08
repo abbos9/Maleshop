@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{% static 'auth/fonts/icomoon/style.css' %}" />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'auth/css/owl.carousel.min.css' %}"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'auth/css/bootstrap.min.css' %}" />
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'auth/css/style.css' %}" />
+
+    <title>Signin</title>
+  </head>
+  <body>
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="d-md-flex half">
+      <div
+        class="bg"
+        style="background-image: url('{% static 'auth/images/bg_1.jpg' %}')"
+      ></div>
+      <div class="contents">
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block mx-auto">
+                <div class="text-center mb-5">
+                  <h3 class="text-uppercase">
+                    Login to <strong>Colorlib</strong>
+                  </h3>
+                </div>
+                <form
+                  action="{% url 'authentification:signin' %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <div class="form-group first">
+                    <label for="username">Username</label>
+                    <input
+                      type="text"
+                      name="username"
+                      class="form-control"
+                      placeholder="your-email@gmail.com"
+                      id="username"
+                    />
+                  </div>
+                  <div class="form-group last mb-3">
+                    <label for="password">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Your Password"
+                      id="password"
+                      name="password"
+                    />
+                  </div>
+
+                  <div class="d-sm-flex mb-5 align-items-center">
+                    <label class="control control--checkbox mb-3 mb-sm-0"
+                      ><span class="caption">Remember me</span> if you don't
+                      have an account
+                      <span
+                        ><a href="{% url 'authentification:signup' %}"
+                          >Register</a
+                        ></span
+                      >
+                    </label>
+                    <span class="ml-auto"
+                      ><a href="#" class="forgot-pass">Forgot Password</a></span
+                    >
+                  </div>
+                  <input
+                    type="submit"
+                    value="Log In"
+                    class="btn btn-block py-2 btn-primary"
+                  />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'auth/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'auth/js/popper.min.js' %}"></script>
+    <script src="{% static 'auth/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'auth/js/main.js' %}"></script>
+  </body>
+</html>
