@@ -55,13 +55,13 @@ def add_to_card(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('pages:shop')))
 
 
-class PAGESHOPCARTVIEW(TemplateView):
+class PAGESHOPCARTVIEW(ListView):
     template_name = 'shopping-cart.html'
+    model = ProductModel
+    context_object_name = 'products'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_queryset(self):
+        queryset = super().get_queryset()
         cart = self.request.session.get('cart', [])
         products = ProductModel.objects.filter(pk__in=cart)
-        context['products'] = products
-        return context
-
+        return products

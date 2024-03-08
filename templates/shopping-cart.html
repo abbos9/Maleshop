@@ -1,4 +1,7 @@
-{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+{% load my_tags %}
+{% block content %}
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
   <div class="container">
@@ -66,16 +69,14 @@
           </table>
         </div>
         <div class="row">
+          {% if products %}
           <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="continue__btn">
-              <a href="#">Continue Shopping</a>
+              <a href="{% url 'pages:shop' %}">Continue Shopping</a>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="continue__btn update__btn">
-              <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-            </div>
-          </div>
+          {% endif %}
+          
         </div>
       </div>
       <div class="col-lg-4">
@@ -90,7 +91,7 @@
           <h6>Cart total</h6>
           <ul>
             <li>Subtotal <span>$ 169.50</span></li>
-            <li>Total <span>$ 169.50</span></li>
+            <li>Total <span>{% total_price request %}</span></li>
           </ul>
           <a href="#" class="primary-btn">Proceed to checkout</a>
         </div>
