@@ -50,7 +50,7 @@
                   </div>
                   <div class="product__cart__item__text">
                     <h6>{{product.name}}</h6>
-                    <h5>${{product.real_price}}</h5>
+                    <h5>${{product.real_price}} <span class="text-danger ml-3" ><s>${{product.price}}</s></span> </h5>
                   </div>
                 </td>
                 <td class="quantity__item">
@@ -82,16 +82,37 @@
       <div class="col-lg-4">
         <div class="cart__discount">
           <h6>Discount codes</h6>
-          <form action="#">
-            <input type="text" placeholder="Coupon code" />
+      {% if coupon %}
+          {% cart_info request coupon as cart %}
+          <div class="alert alert-success messages" role="alert">
+              Coupon applied successfully! 
+              You have {{ cart.0 }} items in your cart. 
+              Your total price is {{ cart.1 }}.
+          </div>
+
+          {% else %}
+          <div class="alert alert-danger messages" role="alert">
+            Coupon didn't be applied successfully!
+          </div>
+          
+      {% endif %}
+          <form method="GET">
+            <input name="coupon" type="text" placeholder="Coupon code" />
             <button type="submit">Apply</button>
           </form>
         </div>
         <div class="cart__total">
           <h6>Cart total</h6>
           <ul>
-            <li>Subtotal <span>$ 169.50</span></li>
-            <li>Total <span>{% total_price request %}</span></li>
+            {% for product in products %}
+            <li>
+              {{product.name|slice:'30'}} <span>${{product.real_price}}</span>
+            </li>
+            {% endfor %}
+
+            {% cart_info request coupon as cart %}
+            
+            <li>Total <span> {{ cart.1  }}</span></li>
           </ul>
           <a href="#" class="primary-btn">Proceed to checkout</a>
         </div>
@@ -100,4 +121,9 @@
   </div>
 </section>
 <!-- Shopping Cart Section End -->
+{% endblock %}
+{% block extra_js %}
+<script>
+  setInterval(function(){ $(".alert").fadeOut(); }, 3000);
+</script>
 {% endblock %}

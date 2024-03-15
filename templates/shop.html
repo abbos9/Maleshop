@@ -236,22 +236,24 @@
                       {% endif %}
                     </a>
                   </li>
-                  <li>
-                    <a href="#"
-                      ><img src="{% static 'img/icon/compare.png' %}" alt="" />
-                      <span>Compare</span></a
-                    >
-                  </li>
+                  
                   <li>
                     <a href="{% url 'products:shop_details' pk=product.pk %}"
                       ><img src="{% static 'img/icon/search.png' %}" alt=""
                     /></a>
-                  </li>
+                  </li> 
                 </ul>
               </div>
               <div class="product__item__text">
                 <h6>{{ product.name }}</h6>
-                <a href="{% url 'products:add_to_card' pk=product.pk %}" class="add-cart">+ Add To Cart</a>
+                
+                <a href="{% url 'products:add_to_card' pk=product.pk %}" class="add-cart">
+                  {% if request|in_cart:product.pk %}
+                  + Remove from Cart
+                  {% else %}
+                  + Add to Cart
+                  {% endif %}
+                </a>
                 <div class="rating">
                   <i class="fa fa-star-o"></i>
                   <i class="fa fa-star-o"></i>

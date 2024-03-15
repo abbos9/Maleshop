@@ -3,10 +3,10 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, ListView, DetailView
-from products.models import( ProductModel,  WishListModel)
+from django.views.generic import ListView, DetailView
+from products.models import(ProductModel,  WishListModel,CupounModel)
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 # Create your views here.
 
 
@@ -45,8 +45,10 @@ def add_to_card(request, pk):
     cart =request.session.get('cart', [])
     if pk in cart:
         cart.remove(pk)
+        messages.success(request,'removed from card')
     else: 
         cart.append(pk)
+        messages.success(request, 'added to card')
     request.session['cart'] = cart
     have_incart = request.GET.get('delete')
     if have_incart:
@@ -59,6 +61,16 @@ class PAGESHOPCARTVIEW(ListView):
     template_name = 'shopping-cart.html'
     model = ProductModel
     context_object_name = 'products'
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        code = self.request.GET.get('coupon')
+        try:
+            coupon = CupounModel.objects.get(code=code)
+            context['coupon'] = coupon
+        except CupounModel.DoesNotExist:
+            context['coupon'] = None
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()

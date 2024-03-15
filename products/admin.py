@@ -1,8 +1,9 @@
 from django.contrib import admin
 from products.models import  (ColorModel, TagsModel, SizeModel, CategoryModel, BrandsModel, 
-ProductModel, SubCategoryModel, WishListModel, ProductImagesModel)
+ProductModel, SubCategoryModel, WishListModel, ProductImagesModel, CupounModel)
 # Register your models here.
 
+# admin.site.register(CupinModel )
 
 class ProductImagesModeInline(admin.TabularInline):
     model = ProductImagesModel

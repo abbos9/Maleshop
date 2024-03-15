@@ -127,7 +127,6 @@ class ProductModel(models.Model):
         else:
             return False
 
-
     def real_price(self):
         price = self.price
         discount = self.discount
@@ -139,6 +138,24 @@ class ProductModel(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+
+class CupounModel(models.Model):
+    code = models.CharField(max_length=15)
+    is_active = models.BooleanField(default=False)
+    discount_amount = models.DecimalField(max_digits=20, decimal_places=2)
+
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.code
+    
+    class Meta:
+        verbose_name = 'Cupon'
+        verbose_name_plural = 'Cupons'
+
+
 
 
 class ProductImagesModel(models.Model):

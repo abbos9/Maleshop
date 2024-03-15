@@ -77,11 +77,12 @@
           <a href="{% url 'products:wishlist' %}"
             ><img src="{%static 'img/icon/heart.png'%}" alt=""
           /></a>
+          {% cart_info request coupon as cart %}
           <a href="{% url 'products:shop_cart' %}"
             ><img src="{%static 'img/icon/cart.png'%}" alt="" />
-            <span>{% count request %}</span></a
+            <span>{{ cart.0 }}</span></a
           >
-          <div class="price">${% total_price request %}</div>
+          <div class="price">${{cart.1}}</div>
         </div>
       </div>
     </div>

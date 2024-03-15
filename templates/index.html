@@ -93,7 +93,7 @@
             class="product__item__pic set-bg"
             data-setbg="{{product.image.url}}"
           >
-          {% if product.created_at|is_product_new %}
+          {% if is_new %}
               <span class="label">New</span>  
             {% endif %}
             {% if product.discount %}
