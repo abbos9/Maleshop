@@ -108,6 +108,7 @@ class ProductModel(models.Model):
     brand = models.ForeignKey(BrandsModel, on_delete=models.CASCADE)
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, related_name='products')
     subcategory = models.ManyToManyField(SubCategoryModel)
+    quantity = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -65,6 +65,7 @@ class PAGESHOPCARTVIEW(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         code = self.request.GET.get('coupon')
+        order = self.request.session.get('order', {})
         try:
             coupon = CupounModel.objects.get(code=code)
             context['coupon'] = coupon

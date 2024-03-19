@@ -82,7 +82,10 @@
       <div class="col-lg-4">
         <div class="cart__discount">
           <h6>Discount codes</h6>
-      {% if coupon %}
+          {% if not request.GET.coupon %}
+
+          {% else %}
+          {% if coupon %}
           {% cart_info request coupon as cart %}
           <div class="alert alert-success messages" role="alert">
               Coupon applied successfully! 
@@ -95,7 +98,8 @@
             Coupon didn't be applied successfully!
           </div>
           
-      {% endif %}
+          {% endif %}
+          {% endif %}
           <form method="GET">
             <input name="coupon" type="text" placeholder="Coupon code" />
             <button type="submit">Apply</button>

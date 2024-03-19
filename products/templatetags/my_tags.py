@@ -23,8 +23,6 @@ def get_cart_info(request, coupon=None):
     quantity = len(cart)
     if coupon:
         total_price = total_price - (total_price * (coupon.discount_amount / 100))
-    else:
-        messages.success(request, "Coupon didn't be applied successfully!")
     return quantity, "{:.2f}".format(total_price)
 
 @register.filter(name='in_cart')
