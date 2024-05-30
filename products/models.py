@@ -128,6 +128,10 @@ class ProductModel(models.Model):
         else:
             return False
 
+    @staticmethod
+    def get_from_cart(cart):
+        return ProductModel.objects.filter(id__in=cart)
+
     def real_price(self):
         price = self.price
         discount = self.discount
@@ -153,8 +157,8 @@ class CupounModel(models.Model):
         return self.code
     
     class Meta:
-        verbose_name = 'Cupon'
-        verbose_name_plural = 'Cupons'
+        verbose_name = 'Coupon'
+        verbose_name_plural = 'Coupons'
 
 
 

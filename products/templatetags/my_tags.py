@@ -1,6 +1,4 @@
 from django import template
-from django.db.models import Sum, F, ExpressionWrapper, fields
-from django.contrib import messages
 # models
 from products.models import ProductModel , WishListModel
 
@@ -16,7 +14,7 @@ def in_wishlist(user, product):
 @register.simple_tag(name='cart_info')
 def get_cart_info(request, coupon=None):
     cart = request.session.get('cart', [])
-    products = ProductModel.objects.filter(pk__in=cart)
+    products = ProductModel.get_from_cart(cart)
     total_price = 0
     for product in products:
         total_price += product.real_price()
@@ -24,6 +22,7 @@ def get_cart_info(request, coupon=None):
     if coupon:
         total_price = total_price - (total_price * (coupon.discount_amount / 100))
     return quantity, "{:.2f}".format(total_price)
+
 
 @register.filter(name='in_cart')
 def in_cart(request, pk):

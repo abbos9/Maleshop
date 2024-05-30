@@ -30,12 +30,13 @@
   </head>
   <body>
     {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
+    {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     {% endif %}
+
     <div class="d-md-flex half">
       <div
         class="bg"

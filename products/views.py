@@ -67,7 +67,7 @@ class PAGESHOPCARTVIEW(ListView):
         code = self.request.GET.get('coupon')
         order = self.request.session.get('order', {})
         try:
-            coupon = CupounModel.objects.get(code=code)
+            coupon = CupounModel.objects.filter(code=code, is_active=True)
             context['coupon'] = coupon
         except CupounModel.DoesNotExist:
             context['coupon'] = None

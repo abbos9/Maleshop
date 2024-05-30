@@ -3,7 +3,7 @@ from products.models import  (ColorModel, TagsModel, SizeModel, CategoryModel, B
 ProductModel, SubCategoryModel, WishListModel, ProductImagesModel, CupounModel)
 # Register your models here.
 
-# admin.site.register(CupinModel )
+admin.site.register(CupounModel )
 
 class ProductImagesModeInline(admin.TabularInline):
     model = ProductImagesModel

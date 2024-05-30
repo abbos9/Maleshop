@@ -39,51 +39,59 @@
             <tbody>
               {% if products %}
               {% for product in products %}
-              <tr>
-                <td class="product__cart__item">
-                  <div class="product__cart__item__pic"  >
-                    <img
-                      src="{{product.image.url}}"
-                      alt="""
-                      width="100px"
-                    />
-                  </div>
-                  <div class="product__cart__item__text">
-                    <h6>{{product.name}}</h6>
-                    <h5>${{product.real_price}} <span class="text-danger ml-3" ><s>${{product.price}}</s></span> </h5>
-                  </div>
-                </td>
-                <td class="quantity__item">
-                  <div class="quantity">
-                    <div class="pro-qty-2">
-                      <input type="text" value="1" />
+              <form method="GET">
+                {% csrf_token %}
+                <tr>
+                  <td class="product__cart__item">
+                    <div class="product__cart__item__pic"  >
+                      <img
+                        src="{{product.image.url}}"
+                        alt="""
+                        width="100px"
+                      />
                     </div>
-                  </div>
-                </td>
-                <td class="cart__price">${{product.price}}</td>
-                <td class="cart__close"><a href="{% url 'products:add_to_card' pk=product.pk %}"><i class="fa fa-close"></i></a></i></td>
-              </tr>
+                    <div class="product__cart__item__text">
+                      <h6>{{product.name}}</h6>
+                      <h5>${{product.real_price}} <span class="text-danger ml-3" ><s>${{product.price}}</s></span> </h5>
+                    </div>
+                  </td>
+                  <td class="quantity__item">
+                    <div class="quantity">
+                      <div class="pro-qty-2">
+                        <input name="quantity" type="submit" onclick="this.form.submit()" value="1" />
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cart__price">${{product.price}}</td>
+                  <td class="cart__close"><a href="{% url 'products:add_to_card' pk=product.pk %}"><i class="fa fa-close"></i></a></i></td>
+                </tr>
+              </form>
               {% endfor %}
               {% endif %}
             </tbody>
           </table>
         </div>
-        <div class="row">
-          {% if products %}
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="continue__btn">
-              <a href="{% url 'pages:shop' %}">Continue Shopping</a>
+        
+          <div class="row">
+            {% if products %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="continue__btn">
+                <a href="{% url 'pages:shop' %}">Continue Shopping</a>
+              </div>
             </div>
-          </div>
-          {% endif %}
-          
+            {% endif %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="continue__btn update__btn">
+                    <a href=""><i class="fa fa-spinner"></i> Update cart</a>
+                </div>
+            </div>
         </div>
+        
       </div>
       <div class="col-lg-4">
         <div class="cart__discount">
           <h6>Discount codes</h6>
           {% if not request.GET.coupon %}
-
           {% else %}
           {% if coupon %}
           {% cart_info request coupon as cart %}
@@ -118,7 +126,7 @@
             
             <li>Total <span> {{ cart.1  }}</span></li>
           </ul>
-          <a href="#" class="primary-btn">Proceed to checkout</a>
+          <a href="{% url 'orders:checkout' %}?coupon={{coupon.code}}" class="primary-btn">Proceed to checkout</a>
         </div>
       </div>
     </div>

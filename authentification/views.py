@@ -11,16 +11,21 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def SigninView(request):
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect("pages:home")
-    else:
-       return render(request, 'register/signin.html',)
-    
-    return render(request, 'register/signin.html',)
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("pages:home")
+        else:
+            # Check if the username is correct but the password is incorrect
+            if authenticate(request, username=username, password=None) is not None:
+                messages.error(request, 'Incorrect password.')
+            else:
+                messages.error(request, 'Invalid username or password.')
+    return render(request, 'register/signin.html')
+
 
 
 # def SignupView(request):
@@ -36,21 +41,22 @@ def SigninView(request):
 
     
 def SignupView(request):
-     form = SignupForm()
-     if request.method == 'POST':
+    form = SignupForm()
+    if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
-            messages.success(request, "Account has been Created" + user)
+            messages.success(request, f"Account has been created for {user}")
             return redirect('authentification:signin')
         else:
-            form = UserCreationForm()
-        return redirect('authentification:signup')
-    
-     context = {'form': form}
-     return render(request, 'register/signup.html', context=context)
- 
+            # Display specific error messages for each field
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    context = {'form': form}
+    return render(request, 'register/signup.html', context=context)
+
 
 
 def SignoutView(request):

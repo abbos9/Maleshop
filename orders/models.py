@@ -33,3 +33,23 @@ class OrderItemModel(models.Model):
 
     def __str__(self):
         return f"Order Item #{self.order.id} - {self.product.name}"
+
+
+class OrderDetailModel(models.Model):
+    Country = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    town = models.CharField(max_length=100)
+    postcode = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    notes = models.TextField()
+    order = models.ForeignKey(OrderModel, on_delete=models.SET_NULL, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order Detail #{self.order.id}"
+    
+    class Meta:
+        verbose_name = _('order detail')
+        verbose_name_plural = _('order details')

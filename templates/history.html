@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<!-- bradcam_area_start -->
+<div class="bradcam_area breadcam_bg overlay">
+    <div class="container" style="display: flex; justify-content: center;" ><h3>HISTORY</h3></div>
+</div>
+<!-- bradcam_area_end -->
+    <!-- best_burgers_area_start  -->
+    <div class="best_burgers_area">
+        <div class="container">
+            <div class="row">
+                {% for order in orders %}
+                <div class="container bootdey">
+                    <div class="panel panel-default panel-order">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="pull-right"><label class="label label-danger">{{order.status_choices}}</label></div>
+                                            <span><strong>Order ID</strong></span>{{order.pk}}<span class="label label-info"></span><br />
+                                            cost: ${{order.total_amount}} <br />
+                                            <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+                                            <a data-placement="top" class="btn btn-danger btn-xs glyphicon glyphicon-trash" href="#" title="Danger"></a>
+                                            <a data-placement="top" class="btn btn-info btn-xs glyphicon glyphicon-usd" href="#" title="Danger"></a>
+                                        </div>
+                                        <div class="col-md-12">order made on:{{order.created_at}} <a href="#">{{order.user.username}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">Put here some note for example: bootdey si a gallery of free bootstrap snippets bootdeys</div>
+                    </div>
+                </div>
+                
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- best_burgers_area_end  -->
+{% endblock %}

@@ -24,7 +24,7 @@ urlpatterns = [
     path('products/', include('products.urls', namespace='products')),
     path('auth/', include('authentification.urls', namespace='authentification')),
     path("blog/", include('blogs.urls', namespace='blogs')),
-    # path('orders/', include('orders.urls', namespace='orders')),
+    path('orders/', include('orders.urls', namespace='orders')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

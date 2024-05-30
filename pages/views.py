@@ -6,8 +6,7 @@ from blogs.models import PostModel
 from pages.models import CaruselModel, ContactModel
 from pages.forms import  ContactForm
 # models
-from products.models import (ProductModel, CategoryModel, TagsModel,
-                              ColorModel, SizeModel,BrandsModel)
+from products.models import (ProductModel, CategoryModel, TagsModel,ColorModel, SizeModel,BrandsModel)
 from blogs.models import MessageModel, PostModel
 # Create your views here.
 
@@ -69,11 +68,6 @@ def PageCommentView(request, pk):
         )
     return redirect('pages:blog_detail', pk=pk)
 
-            
-
-
-class PAGECHECKOUTVIEW(TemplateView):
-    template_name = 'checkout.html'
 
 class PAGECONTACTVIEW(CreateView):
     template_name = 'contact.html'

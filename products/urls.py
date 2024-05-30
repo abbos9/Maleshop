@@ -1,5 +1,6 @@
 # imports 
 from django.urls import path
+from orders.views import add_cart_data
 from products.views import (WishListView, add_to_wishlist,ProductDetailView, add_to_card, PAGESHOPCARTVIEW)
 
 app_name = 'products'
@@ -10,5 +11,6 @@ urlpatterns = [
     path('<int:pk>/shop_detail', ProductDetailView.as_view(),name= 'shop_details'),
     path('<int:pk>/add_to_card', add_to_card, name= 'add_to_card'),
     path('shop_cart/', PAGESHOPCARTVIEW.as_view(), name='shop_cart' ),
+    path('<int:pk>/quantity/<int:quantity>', add_cart_data, name='add_cart_data')
 ]
 
